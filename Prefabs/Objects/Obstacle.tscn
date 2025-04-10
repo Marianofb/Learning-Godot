@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc6yh7gx13g"]
+
+[ext_resource type="Script" uid="uid://b3lashq5a2vyk" path="res://Scripts/Things/Obstacle.gd" id="1_qim00"]
+[ext_resource type="Texture2D" uid="uid://c2ghotrmnfjuv" path="res://Sprites/Player/Idle/Player_Idle33.png" id="2_gaxs0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qim00"]
+radius = 14.0
+height = 32.0
+
+[node name="Obstacle" type="Node2D"]
+script = ExtResource("1_qim00")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(3.45, 3.45)
+texture = ExtResource("2_gaxs0")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CapsuleShape2D_qim00")

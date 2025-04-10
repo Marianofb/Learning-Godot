@@ -1,0 +1,21 @@
+{
+	"npcGreeting": "¿Qué querés?",
+	"options": [
+		{
+			"text": "Preguntar sobre la ciudad",
+			"response": "Esta ciudad es antigua y llena de historia.",
+		},
+		{
+			"text": "Preguntar sobre el trabajo",
+			"response": "Soy comerciante, vendo todo tipo de mercancías.",
+		},
+		{
+			"text": "Comerciar",
+			"action": "trade"
+		},
+		{
+			"text": "Leave",
+			"closeDialog": true
+		}
+	]
+}

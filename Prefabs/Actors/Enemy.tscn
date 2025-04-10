@@ -1,0 +1,51 @@
+[gd_scene load_steps=12 format=3 uid="uid://ycphi7arv4ma"]
+
+[ext_resource type="Script" uid="uid://b41ys8d3k6dwk" path="res://Scripts/IA/Enemy/Enemy.gd" id="1_3m12k"]
+[ext_resource type="Script" uid="uid://dyrq0ncv420h5" path="res://Scripts/IA/Enemy/EnemyMovement.gd" id="2_3m12k"]
+[ext_resource type="Texture2D" uid="uid://dkrad42av66do" path="res://icon.svg" id="3_gh05d"]
+[ext_resource type="Script" uid="uid://cdb8m5dpyp74a" path="res://Scripts/IA/Enemy/EnemyFOV.gd" id="4_0d5ej"]
+[ext_resource type="Script" uid="uid://qbkhqwcrt1oc" path="res://Scripts/IA/Enemy/FSM/EnemyStateMachine.gd" id="5_7jx0q"]
+[ext_resource type="Script" uid="uid://djsu3evcioaf0" path="res://Scripts/IA/Enemy/FSM/States/EnemyIdle.gd" id="6_ngktx"]
+[ext_resource type="Script" uid="uid://blil1ekcc1s4h" path="res://Scripts/IA/Enemy/FSM/States/EnemyRoutine.gd" id="7_dvsw4"]
+[ext_resource type="Script" uid="uid://83ho58va4hlh" path="res://Scripts/IA/Enemy/FSM/States/EnemyChase.gd" id="8_ap206"]
+[ext_resource type="Script" uid="uid://dfbpe4q8r36cb" path="res://Scripts/IA/Enemy/FSM/States/EnemyAttack.gd" id="9_f434l"]
+[ext_resource type="Script" uid="uid://c1wubxsdbjrcs" path="res://Scripts/IA/Enemy/FSM/States/EnemyFlee.gd" id="10_rdfr8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gosiu"]
+radius = 10.0499
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_3m12k")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("2_3m12k")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(0.17, 0.16)
+texture = ExtResource("3_gh05d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_gosiu")
+
+[node name="FOV" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("4_0d5ej")
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("5_7jx0q")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("6_ngktx")
+
+[node name="Routine" type="Node" parent="StateMachine"]
+script = ExtResource("7_dvsw4")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("8_ap206")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("9_f434l")
+
+[node name="Flee" type="Node" parent="StateMachine"]
+script = ExtResource("10_rdfr8")

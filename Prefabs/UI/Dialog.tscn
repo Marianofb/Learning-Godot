@@ -1,0 +1,519 @@
+[gd_scene load_steps=14 format=3 uid="uid://bd6s0gwi3dmxi"]
+
+[ext_resource type="Script" uid="uid://cdur6su6q3ks5" path="res://Scripts/UI/Dialog/DialogBoxJSON.gd" id="1_jj7ef"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fvpl1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oyfyc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7qllv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_abae2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tpkhh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_og77u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_slmbm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jj7ef"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4w7du"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p2il2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqe7e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eh620"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DialogBox" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -495.0
+offset_top = -332.0
+offset_right = 506.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_jj7ef")
+
+[node name="TextureRect" type="TextureRect" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_fvpl1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "SPQR: A History of Ancient Rome by Mary Beard is a comprehensive and engaging exploration of the history of ancient Rome, from its mythical beginnings to the fall of the Roman Empire. The book provides a fresh perspective on Roman history, challenging conventional narratives and offering insights into the lives of ordinary Romans, not just the famous leaders and events that have often dominated historical accounts."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DialogBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 109.0
+offset_right = -16.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "
+"
+
+[node name="Button" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button2" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button3" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button4" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button5" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button6" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button7" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button8" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button9" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button10" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button11" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button12" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button13" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button14" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button15" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button16" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true
+
+[node name="Button17" type="Button" parent="DialogBox/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.255659, 0.255659, 0.255659, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxEmpty_oyfyc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_7qllv")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_abae2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_tpkhh")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_og77u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_slmbm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jj7ef")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_4w7du")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p2il2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_eqe7e")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eh620")
+text = "1. Probando"
+metadata/_edit_lock_ = true

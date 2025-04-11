@@ -17,8 +17,7 @@ func InitializeAStar():
 	aStarGrid.cell_size = Vector2(16,16)
 	aStarGrid.update()
 	
-	# Escanear todas las celdas después de inicializar
-	scan_all_grid_cells()
+	ScanAllGridCellsForObstacles()
 
 func GetPathToTarget(selfPosition, targetPosition) -> Array[Vector2i]:
 	var path = aStarGrid.get_id_path(
@@ -42,58 +41,28 @@ func ShortenPath(path : Array[Vector2i]):
 			pastPoint = currentPoint
 		i += 1
 
-# Función para escanear todas las celdas del grid
-func scan_all_grid_cells() -> Dictionary:
-	var cells_with_objects = {}
-	var grid_size = aStarGrid.region.size
-	var grid_position = aStarGrid.region.position
+func ScanAllGridCellsForObstacles() -> void:
+	var gridSize = aStarGrid.region.size
+	var gridPosition = aStarGrid.region.position
 	
-	#print("Escaneando grid desde posición ", grid_position, " con tamaño ", grid_size)
-	
-	# Recorrer todas las celdas del grid
-	for x in range(grid_position.x, grid_position.x + grid_size.x):
-		for y in range(grid_position.y, grid_position.y + grid_size.y):
-			var cell_pos = Vector2i(x, y)
-			
-			# Verificar si hay objetos en esta celda
-			if is_object_in_cell(cell_pos):
-				var object_name = get_object_name_in_cell(cell_pos)
-				cells_with_objects[cell_pos] = object_name
-				#print("Encontrado objeto '", object_name, "' en celda ", cell_pos)
-	
-	#print("Escaneo completado. Se encontraron ", cells_with_objects.size(), " celdas con objetos.")
-	return cells_with_objects
-
-# Función para detectar si hay un objeto en una celda específica
-func is_object_in_cell(cell_position: Vector2i) -> bool:
-	# Convertir posición de celda a coordenadas globales
-	var global_pos = tileMap.map_to_local(cell_position)
-	
-	# Realizar una consulta de física
-	var space_state = get_world_2d().direct_space_state
-	var query = PhysicsPointQueryParameters2D.new()
-	query.position = global_pos
-	
-	# Puedes configurar la máscara de colisión si es necesario
-	# query.collision_mask = tu_máscara
-	
-	var result = space_state.intersect_point(query)
-	return result.size() > 0
+	for x in range(gridPosition.x, gridPosition.x + gridSize.x):
+		for y in range(gridPosition.y, gridPosition.y + gridSize.y):
+			var cellPos = Vector2i(x, y)
+			SetObjectPointSolid(cellPos)
 
 # Función para obtener el nombre del objeto en una celda
-func get_object_name_in_cell(cell_position: Vector2i) -> String:
-	var global_pos = tileMap.map_to_local(cell_position)
+func SetObjectPointSolid(cellPosition: Vector2i) -> void:
+	var globalPos = tileMap.map_to_local(cellPosition)
 	
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
-	query.position = global_pos
+	query.position = globalPos
 	
 	var result = space_state.intersect_point(query)
-	var colliderMask : int = result[0]["collider"].get_collision_mask()
-	if(colliderMask == game.GetLayerMaskObstacle()):
-		#print("Collider Mask: ", colliderMask)
-		aStarGrid.set_point_solid(cell_position, true)
-		pass
-		
-	
-	return ""
+	if(ObjectFoundOnCellPosition(result)):
+		var colliderMask : int = result[0]["collider"].get_collision_mask()
+		if(colliderMask == game.GetLayerMaskObstacle()):
+			aStarGrid.set_point_solid(cellPosition, true)
+
+func ObjectFoundOnCellPosition(result : Array) -> bool:
+	return result.size() > 0

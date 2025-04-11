@@ -2,8 +2,6 @@ class_name EnemyMovement extends CharacterBody2D
 
 # AStart
 @export_category("AStar Components")
-@onready var tileMap = $"../../TileMapLayer"
-@onready var pathManager = $"../../PathManager"
 
 @export_category("Pathing Variables")
 @export var thresholdDistanceToNextNode : float = 20
@@ -14,7 +12,8 @@ var distanceToNextPathPosition : float
 var currentPath : Array[Vector2i]
 var ahead : Vector2 
 var ahead2 : Vector2
-var avoidanceForce : Vector2
+var obstacleAvoidanceForce : Vector2 = Vector2.ZERO
+var otherNPCAvoidanceForce : Vector2 = Vector2.ZERO
 var feelingSafePosition : Vector2 = Vector2.ZERO
 var feelingSafePositionDirection : Vector2 = Vector2.ZERO
 var nextPointPosition : Vector2 = Vector2.ZERO
@@ -26,58 +25,149 @@ var enemy: Enemy
 
 func _ready() -> void:
 	enemy = get_parent()
-	await enemy._ready()
+	await enemy.ready
 	RequestPathToTarget(enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
 
 func _process(delta: float) -> void:
 	RequestPathToTarget(enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
-	GetAvoidanceForce(enemy.GetSelfGlobalPosition(), enemy.GetSelfCharactearBody2D(), enemy.GetAvoidanceRadius(), enemy.GetSelfSpeed())
 	
 func _physics_process(delta: float) -> void:
+	queue_redraw()	
+	## Avoidance Force Type ##
+	SetObstacleAvoidanceForce(enemy.GetSelfGlobalPosition(), enemy.GetSelfCharactearBody2D(), enemy.GetAvoidanceRadius(), enemy.GetSelfSpeed())
+	SetOtherNPCAvoidanceForce(enemy.GetDrag(), enemy.GetNeighbours(), enemy.GetCollsionRadius())
+	
+	## Movemenet Type ## 
 	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
-	FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
+	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
+	#FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
 	#GoToFutureTargetPosition(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#Flee(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#EvadeThreat(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())		
-	
-	queue_redraw()	
 
 func _draw() -> void:
-	draw_line(Vector2.ZERO, ahead, Color.BLACK)
-	draw_line(Vector2.ZERO, ahead2, Color.WEB_GREEN)
-	for pathPoint in currentPath:
-		var pointPosition = tileMap.map_to_local(pathPoint)
-		var square_size = 16 
-		if pointPosition == lastTargetPosition:
-			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.BLUE)
-		elif pointPosition == nextPointPosition:
-			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.GREEN)
-		else:	
-			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.RED)
+	DrawPathPoints()
+	#DrawAvoidanceRadius()
+	#DrawAhead()
+	DrawCollisionRadius()
+	pass
 
 func RequestPathToTarget(selfPostion, targetPostion):	
 	if currentPath.is_empty():
-		currentPath = pathManager.GetPathToTarget(selfPostion, targetPostion)
+		currentPath = enemy.game.pathManager.GetPathToTarget(selfPostion, targetPostion)
 
-func GetCollision() -> bool:
+func Collision() -> bool:
 	if get_slide_collision_count() > 0:
 		return true
 		
 	return false
 
-func GetAvoidanceForce(selfGlobalPosition:Vector2, selfCharacterBody2D:CharacterBody2D, avoidanceRadius:float, selfSpeed : float) -> Vector2:
+#For walls or obstacles
+func SetObstacleAvoidanceForce(selfGlobalPosition:Vector2, selfCharacterBody2D:CharacterBody2D, avoidanceRadius:float, selfSpeed : float) -> Vector2:
 	var dynamicLength : float = selfCharacterBody2D.velocity.length() / selfSpeed
 	ahead = selfCharacterBody2D.velocity.normalized() * avoidanceRadius 
 	ahead2 = selfCharacterBody2D.velocity.normalized() * (avoidanceRadius * 0.5)
-	var closestCollider : Node2D = GetClosestCollider()
+	var closestCollider : Node2D = GetClosestObstacle()
 	
-	if (closestCollider != null):
-		avoidanceForce = (ahead - closestCollider.global_position) * enemy.GetMaxAvoidanceForce()
+	if (closestCollider):
+		obstacleAvoidanceForce +=  closestCollider.global_position + ((ahead + ahead2)  * enemy.GetMaxAvoidanceForce())
 	else:
-		avoidanceForce = Vector2.ZERO
+		obstacleAvoidanceForce = Vector2.ZERO
+		
+	return obstacleAvoidanceForce
 
+#For others NPCs
+func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collisionRadius : float) -> Vector2:
+	var shortestTime : float = INF
+	var target : Enemy = null
+	var targetCollisionRadius: float
+	var radiusSum : float = 0
+	var targetMinSeparation : float 
+	var targetCharacterBody2D : CharacterBody2D
+	var targetRelativePos : Vector2
+	var targetRelativeVel : Vector2
+	var targetDistance : float 
+	
+	for neighbour : Enemy in neighbours:
+		if neighbour == enemy:
+			continue
+		
+		#Calculate the time to collision
+		targetCollisionRadius = neighbour.GetCollsionRadius()
+		radiusSum = targetCollisionRadius + collisionRadius
+		targetCharacterBody2D = neighbour.GetSelfCharactearBody2D()
+		var relativePos : Vector2 = targetCharacterBody2D.global_position - enemy.GetSelfCharactearBody2D().global_position
+		var relativeVel : Vector2 = targetCharacterBody2D.velocity - enemy.GetSelfCharactearBody2D().velocity
+		var relativeSpeed : float = relativeVel.length()
+		
+		var timeToCollision : float  = relativePos.dot(relativeVel) / (relativeSpeed * relativeSpeed)		
+		
+		#Check if there is going to be a collision at all
+		var distance : float = relativePos.length()
+		var minSeparation : float = distance + relativeSpeed * timeToCollision
+	
+		if minSeparation > radiusSum:
+			continue
+		
+		#Check if it is the shortest time
+		if timeToCollision < 0 and timeToCollision < shortestTime:
+			#Store the target and its variables
+			shortestTime = timeToCollision
+			target = neighbour
+			targetMinSeparation = minSeparation
+			targetDistance = distance
+			targetRelativePos = relativePos
+			targetRelativeVel = relativeVel
+	
+	#If the neighbours are too far than we have no target
+	if target == null:
+		otherNPCAvoidanceForce = Vector2.ZERO
+		return Vector2.ZERO
+	
+	var avoidanceDirection : Vector2
+	#If we are already colliding or we are gonna hit
+	#Else calculate the relative future position of the target
+	if targetDistance < radiusSum:
+		print('COLISIÓN DETECTADA')
+		avoidanceDirection = -targetRelativePos.normalized()
+		#Añadir un componente perpendicular para romper situaciones de bloqueo
+		var perpendicularDir = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
+		#Usa un componente aleatorio pero consistente para decidir la dirección de escape
+		var randomFactor = sin(enemy.GetSelfCharactearBody2D().global_position.x * 100) # Valor pseudo-aleatorio pero estable
+	
+		if randomFactor > 0:
+			avoidanceDirection = (avoidanceDirection + perpendicularDir).normalized() * 40
+		else:
+			avoidanceDirection = (avoidanceDirection - perpendicularDir).normalized() * 40
+	else:
+		var futurePos = targetRelativePos - targetRelativeVel * shortestTime
+		avoidanceDirection = -futurePos.normalized()
+		
+		
+	otherNPCAvoidanceForce = avoidanceDirection
+	
+	return otherNPCAvoidanceForce
+		
 
-	return avoidanceForce
+func GetClosestObstacle() -> Node2D:
+	var closestCollider : Node2D = null
+	var distanceCollider : float = INF
+	var distanceToClosestCollider : float = INF
+	
+	var aheadHit : Node2D = RaycastHitsObstacle(global_position, ahead) 
+	var aheadHit2 : Node2D = RaycastHitsObstacle(global_position, ahead2)
+	
+	if (closestCollider == null ||  distanceCollider < distanceToClosestCollider):
+		if aheadHit:
+			closestCollider = aheadHit
+		elif aheadHit2 :
+			closestCollider = aheadHit2
+		elif Collision():
+			closestCollider = aheadHit2
+			
+		distanceToClosestCollider = distanceCollider
+		
+	return closestCollider
 
 func RaycastHitsObstacle(selfGlobalPosition:Vector2, ahead:Vector2) -> Node2D:
 	var space_state = get_world_2d().direct_space_state
@@ -91,35 +181,6 @@ func RaycastHitsObstacle(selfGlobalPosition:Vector2, ahead:Vector2) -> Node2D:
 			return collider
 	
 	return null
-		
-func GetClosestCollider() -> Node2D:
-	
-	var closestCollider : Node2D = null
-	var distanceCollider : float = INF
-	var distanceToClosestCollider : float = INF
-	
-	var aheadHit : Node2D = RaycastHitsObstacle(global_position, ahead) 
-	var aheadHit2 : Node2D = RaycastHitsObstacle(global_position, ahead2)
-	#if aheadHit:		
-	#	print("aheadHit: ", aheadHit.get_parent().name)
-	#if aheadHit2:		
-	#	print("aheadHit2: ", aheadHit2.get_parent().name)
-		
-
-	if (closestCollider == null ||  distanceCollider < distanceToClosestCollider):
-		if aheadHit :
-			closestCollider = aheadHit
-		elif aheadHit2:
-			closestCollider = aheadHit2
-			
-		distanceToClosestCollider = distanceCollider
-		#print("HIT: ", closestCollider.name)
-	
-	#if(closestCollider)	:
-		#print("RETURN: ", closestCollider.name)
-		
-	return closestCollider
-	
 	
 ## SEEK ## 	
 func Seek(selfSpeed:float, selfDrag:float, selfCharacterBody2D:CharacterBody2D, selfGlobalPosition:Vector2, destinationGlobalPosition:Vector2, ) -> void:
@@ -128,7 +189,6 @@ func Seek(selfSpeed:float, selfDrag:float, selfCharacterBody2D:CharacterBody2D, 
 	
 	#Steering Behaviour
 	var desiredVelocity : Vector2 = currentChaseDirection.normalized() * selfSpeed
-	desiredVelocity += avoidanceForce
 	
 	#OnArrival
 	distanceToDestination = selfGlobalPosition.distance_to(lastTargetPosition)
@@ -136,18 +196,18 @@ func Seek(selfSpeed:float, selfDrag:float, selfCharacterBody2D:CharacterBody2D, 
 		desiredVelocity = currentChaseDirection.normalized() * selfSpeed * (distanceToDestination / thresholdDistanceToOnArrival)
 	
 	var steering : Vector2 = (desiredVelocity - selfCharacterBody2D.velocity) / selfDrag
+
+	var totalForce : Vector2 = steering + obstacleAvoidanceForce + otherNPCAvoidanceForce
+	selfCharacterBody2D.velocity += totalForce
+	selfCharacterBody2D.velocity =  selfCharacterBody2D.velocity.normalized() * clamp(selfCharacterBody2D.velocity.length(), 0, selfSpeed)
+	#print("Name: ", enemy.name, "  | velocity: ", selfCharacterBody2D.velocity)
 	
-	#Check that enemy.velocity is equal or less than speed
-	selfCharacterBody2D.velocity += steering + avoidanceForce
-	selfCharacterBody2D.velocity = selfCharacterBody2D.velocity.normalized() * clamp(selfCharacterBody2D.velocity.length(), 0, selfSpeed)
-	
-		
 	selfCharacterBody2D.move_and_slide()
 
 func FollowPath(selfSpeed:float, selfDrag:float, selfCharacterBody2D:CharacterBody2D, selfGlobalPosition:Vector2):
 	if !currentPath.is_empty():
-		lastTargetPosition = tileMap.map_to_local(currentPath.back())
-		nextPointPosition = tileMap.map_to_local(currentPath.front())
+		lastTargetPosition =  enemy.game.tileMapLayer.map_to_local(currentPath.back())
+		nextPointPosition = enemy.game.tileMapLayer.map_to_local(currentPath.front())
 		distanceToNextPathPosition =  selfGlobalPosition.distance_to(nextPointPosition)
 		if distanceToNextPathPosition < thresholdDistanceToNextNode:
 			currentPath.remove_at(0)
@@ -160,7 +220,7 @@ func GoToFutureTargetPosition(selfSpeed:float, selfDrag:float, targetVelocity:Ve
 	var timeToReachTargetPosition : float = distanceToTarget.length() / selfSpeed
 	var futureTargetPosition : Vector2 	= targetGlobalPosition + targetVelocity * timeToReachTargetPosition
 	
-	Seek(selfSpeed, selfDrag, selfCharacterBody2D, selfGlobalPosition, nextPointPosition, )
+	Seek(selfSpeed, selfDrag, selfCharacterBody2D, selfGlobalPosition, futureTargetPosition)
 
 ## FLEE ## 
 func Flee(selfSpeed:float, selfDrag:float, selfGlobalPosition:Vector2, threatGlobalPosition:Vector2,
@@ -182,7 +242,7 @@ func Flee(selfSpeed:float, selfDrag:float, selfGlobalPosition:Vector2, threatGlo
 	var steering : Vector2 = (desiredVelocity - selfCharacterBody2D.velocity) / selfDrag
 	
 	#Check that enemy.velocity is equal or less than speed
-	selfCharacterBody2D.velocity += steering
+	selfCharacterBody2D.velocity += steering + obstacleAvoidanceForce + otherNPCAvoidanceForce
 	selfCharacterBody2D.velocity = selfCharacterBody2D.velocity.normalized() * clamp(selfCharacterBody2D.velocity.length(), 0, selfSpeed)
 		
 	selfCharacterBody2D.move_and_slide()
@@ -204,3 +264,26 @@ func EvadeThreat(selfSpeed:float, selfDrag:float, targetVelocity:Vector2, selfGl
 	var futureThreatPosition : Vector2 	= threatPosition + targetVelocity * timeToReachTargetPosition
 	
 	Flee(selfSpeed, selfDrag, selfGlobalPosition, futureThreatPosition, selfCharacterBody2D)
+
+func DrawAvoidanceRadius() -> void:
+	var colorRadius =  Color(0.5, 0.5, 2, 0.5)
+	draw_circle(Vector2.ZERO, enemy.GetAvoidanceRadius(), colorRadius)
+
+func DrawCollisionRadius() -> void:
+	var colorRadius =  Color(2, 0.5, 2, 0.5)
+	draw_circle(Vector2.ZERO, enemy.GetCollsionRadius()*2, colorRadius)
+
+func DrawPathPoints() -> void:
+	for pathPoint in currentPath:
+		var pointPosition = enemy.game.tileMapLayer.map_to_local(pathPoint)
+		var square_size = 16 
+		if pointPosition == lastTargetPosition:
+			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.BLUE)
+		elif pointPosition == nextPointPosition:
+			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.GREEN)
+		else:	
+			draw_rect(Rect2(pointPosition - enemy.GetSelfGlobalPosition() - Vector2(square_size, square_size), Vector2(square_size, square_size)), Color.RED)
+
+func DrawAhead() -> void:
+	draw_line(Vector2.ZERO, ahead, Color.BLACK)
+	draw_line(Vector2.ZERO, ahead2, Color.WEB_GREEN)

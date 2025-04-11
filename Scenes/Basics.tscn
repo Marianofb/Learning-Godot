@@ -165,26 +165,35 @@ metadata/_edit_lock_ = true
 script = ExtResource("3_pp372")
 
 [node name="Player" parent="." instance=ExtResource("4_d6rs0")]
-position = Vector2(793, 538)
+position = Vector2(600, 417)
 
-[node name="Enemy" parent="." instance=ExtResource("5_frrjq")]
-position = Vector2(1082, 542)
-maxAvoidanceForce = 3.0
-avoidanceRadius = 45.0
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="Enemy" parent="NPCs" node_paths=PackedStringArray("thing") instance=ExtResource("5_frrjq")]
+position = Vector2(949, 101)
+maxAvoidanceForce = 14.0
+avoidanceRadius = 40.0
+thing = NodePath("../../Objects/Obstacle")
+
+[node name="Enemy2" parent="NPCs" node_paths=PackedStringArray("thing") instance=ExtResource("5_frrjq")]
+position = Vector2(217, 108)
+maxAvoidanceForce = 14.0
+avoidanceRadius = 40.0
+thing = NodePath("../../Objects/Obstacle2")
 
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Obstacle" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(823, 286)
+position = Vector2(162, 102)
 
 [node name="Obstacle2" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(450, 386)
+position = Vector2(998, 100)
 
 [node name="Obstacle3" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(312, 267)
+position = Vector2(613, 336)
 
 [node name="Obstacle4" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(944, 524)
+position = Vector2(681, 376)
 
 [node name="Obstacle5" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(464, 177)
+position = Vector2(685, 298)

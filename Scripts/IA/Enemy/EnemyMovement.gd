@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	
 	## Movemenet Type ## 
 	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
-	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
+	Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
 	#FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
 	#GoToFutureTargetPosition(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#Flee(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
@@ -105,7 +105,7 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 		#Check if there is going to be a collision at all
 		var distance : float = relativePos.length()
 		var minSeparation : float = distance + relativeSpeed * timeToCollision
-	
+		
 		if minSeparation > radiusSum:
 			continue
 		
@@ -129,16 +129,19 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 	#Else calculate the relative future position of the target
 	if targetDistance < radiusSum:
 		print('COLISIÓN DETECTADA')
+		# Dirección base de escape (alejarse)
 		avoidanceDirection = -targetRelativePos.normalized()
-		#Añadir un componente perpendicular para romper situaciones de bloqueo
-		var perpendicularDir = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
-		#Usa un componente aleatorio pero consistente para decidir la dirección de escape
-		var randomFactor = sin(enemy.GetSelfCharactearBody2D().global_position.x * 100) # Valor pseudo-aleatorio pero estable
-	
-		if randomFactor > 0:
-			avoidanceDirection = (avoidanceDirection + perpendicularDir).normalized() * 40
+		# Crear un valor pseudo-aleatorio pero consistente basado en la posición
+		var positionHash = int(enemy.global_position.x * 1000) % 2  # Dará 0 o 1 de forma consistente
+		# Crear vector lateral (perpendicular)
+		var sideDirection = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
+		# Si hash es 0, usamos una dirección, si es 1, usamos la contraria
+		if positionHash == 0:
+			avoidanceDirection = avoidanceDirection + sideDirection
 		else:
-			avoidanceDirection = (avoidanceDirection - perpendicularDir).normalized() * 40
+			avoidanceDirection = avoidanceDirection - sideDirection
+		# Normalizar y aplicar fuerza
+		avoidanceDirection = avoidanceDirection.normalized() * 40
 	else:
 		var futurePos = targetRelativePos - targetRelativeVel * shortestTime
 		avoidanceDirection = -futurePos.normalized()

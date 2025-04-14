@@ -129,18 +129,13 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 	#Else calculate the relative future position of the target
 	if targetDistance < radiusSum:
 		print('COLISIÓN DETECTADA')
-		# Dirección base de escape (alejarse)
 		avoidanceDirection = -targetRelativePos.normalized()
-		# Crear un valor pseudo-aleatorio pero consistente basado en la posición
-		var positionHash = int(enemy.global_position.x * 1000) % 2  # Dará 0 o 1 de forma consistente
-		# Crear vector lateral (perpendicular)
+		var positionHash = int(enemy.global_position.x * 1000) % 2 
 		var sideDirection = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
-		# Si hash es 0, usamos una dirección, si es 1, usamos la contraria
 		if positionHash == 0:
 			avoidanceDirection = avoidanceDirection + sideDirection
 		else:
 			avoidanceDirection = avoidanceDirection - sideDirection
-		# Normalizar y aplicar fuerza
 		avoidanceDirection = avoidanceDirection.normalized() * 40
 	else:
 		var futurePos = targetRelativePos - targetRelativeVel * shortestTime

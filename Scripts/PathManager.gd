@@ -63,6 +63,23 @@ func SetObjectPointSolid(cellPosition: Vector2i) -> void:
 		var colliderMask : int = result[0]["collider"].get_collision_mask()
 		if(colliderMask == game.GetLayerMaskObstacle()):
 			aStarGrid.set_point_solid(cellPosition, true)
+			SetAdjacentCellsWeight(cellPosition, 5)
+		else:
+			aStarGrid.set_point_solid(cellPosition, false)
 
 func ObjectFoundOnCellPosition(result : Array) -> bool:
 	return result.size() > 0
+	
+func SetAdjacentCellsWeight(cellPosition: Vector2i, weight: float = 5.0) -> void:
+	# Definir las 8 celdas adyacentes (incluyendo diagonales)
+	var directions = [
+		Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
+		Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), 
+		Vector2i(0, 1),   Vector2i(1, 1)
+	]
+	for dir in directions:
+		var adjacentCell = cellPosition + dir
+
+		if aStarGrid.region.has_point(adjacentCell) and not aStarGrid.is_point_solid(adjacentCell):
+			var currentWeight = aStarGrid.get_point_weight_scale(adjacentCell)
+			aStarGrid.set_point_weight_scale(adjacentCell, currentWeight + weight)

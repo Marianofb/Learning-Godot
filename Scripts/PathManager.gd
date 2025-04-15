@@ -42,8 +42,6 @@ func ShortenPath(path : Array[Vector2i]):
 			var distanceThirdPoint : float = (thirdPoint - currentPoint).length()
 			#It represents the total sum of the distance from 0 -> 1 + 1 -> 2
 			var distanceSecondPoint : float =   (secondPoint - currentPoint).length() + (thirdPoint - secondPoint).length()
-			print('distanceThirdPoint: ' , distanceThirdPoint)
-			print('distanceSecondPoint: ' , distanceSecondPoint)
 			if !RaycastHitsObstacle(currentPoint, thirdPoint) && distanceThirdPoint < distanceSecondPoint:
 				path.remove_at(i-1)
 		i += 1

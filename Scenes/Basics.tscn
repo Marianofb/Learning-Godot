@@ -191,7 +191,7 @@ position = Vector2(674, 514)
 position = Vector2(566, 328)
 
 [node name="Obstacle4" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(698, 409)
+position = Vector2(681, 376)
 
 [node name="Obstacle5" parent="Objects" instance=ExtResource("6_frrjq")]
 position = Vector2(685, 298)

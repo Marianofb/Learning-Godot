@@ -16,7 +16,7 @@ func InitializeAStar():
 	aStarGrid.cell_size = Vector2(16,16)
 	aStarGrid.update()
 	
-	ScanAllGridCellsForObstacles()
+	SetWeightPointsForObstacles()
 
 func GetPathToTarget(selfPosition, targetPosition) -> Array[Vector2i]:
 	var path = aStarGrid.get_id_path(
@@ -53,12 +53,12 @@ func RaycastHitsObstacle(origin:Vector2i, destiny:Vector2i) -> bool:
 
 	if result:
 		var collider = result.collider
-		if collider.get_collision_mask() == game.GetLayerMaskObstacle() : 
+		if collider.get_collision_layer() == game.GetLayerObstacle() : 
 			return true
 	
 	return false
 
-func ScanAllGridCellsForObstacles() -> void:
+func SetWeightPointsForObstacles() -> void:
 	var gridSize = aStarGrid.region.size
 	var gridPosition = aStarGrid.region.position
 	
@@ -76,8 +76,8 @@ func SetObjectPointSolid(cellPosition: Vector2i) -> void:
 	
 	var result = space_state.intersect_point(query)
 	if(ObjectFoundOnCellPosition(result)):
-		var colliderMask : int = result[0]["collider"].get_collision_mask()
-		if(colliderMask == game.GetLayerMaskObstacle()):
+		var colliderLayer : int = result[0]["collider"].get_collision_layer()
+		if(colliderLayer == game.GetLayerObstacle()):
 			aStarGrid.set_point_solid(cellPosition, true)
 			SetAdjacentCellsWeight(cellPosition, 5)
 		else:
@@ -89,8 +89,8 @@ func ObjectFoundOnCellPosition(result : Array) -> bool:
 func SetAdjacentCellsWeight(cellPosition: Vector2i, weight: float = 5.0) -> void:
 	var directions = [
 		Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1),
-		Vector2i(-1, 0), Vector2i(1, 0), Vector2i(-1, 1), 
-		Vector2i(0, 1),   Vector2i(1, 1)
+		Vector2i(-1, 1), Vector2i(0, 1),   Vector2i(1, 1),
+		Vector2i(-1, 0), Vector2i(1, 0)
 	]
 	for dir in directions:
 		var adjacentCell = cellPosition + dir

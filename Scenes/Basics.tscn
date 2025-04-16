@@ -165,7 +165,7 @@ metadata/_edit_lock_ = true
 script = ExtResource("3_pp372")
 
 [node name="Player" parent="." instance=ExtResource("4_d6rs0")]
-position = Vector2(600, 417)
+position = Vector2(602, 429)
 
 [node name="NPCs" type="Node2D" parent="."]
 
@@ -188,10 +188,10 @@ position = Vector2(221, 101)
 position = Vector2(1023, 93)
 
 [node name="Obstacle3" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(545, 281)
+position = Vector2(558, 419)
 
 [node name="Obstacle4" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(692, 419)
+position = Vector2(646, 424)
 
 [node name="Obstacle5" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(685, 298)
+position = Vector2(605, 379)

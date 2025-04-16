@@ -7,7 +7,7 @@ class_name Game extends Node2D
 @onready var player : Node2D
 @onready var children : Array[Node]
 
-const LAYER_MASK_OBSTACLE = 2
+const LAYER_OBSTACLE = 2
 
 func _ready() -> void:
 	player = get_node('Player')
@@ -19,5 +19,5 @@ func SetChildren() -> void:
 func GetChildren() -> Array[Node]:
 	return children
 
-func GetLayerMaskObstacle() -> int:
-	return LAYER_MASK_OBSTACLE
+func GetLayerObstacle() -> int:
+	return LAYER_OBSTACLE

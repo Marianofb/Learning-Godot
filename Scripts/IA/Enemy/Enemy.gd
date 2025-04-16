@@ -94,7 +94,6 @@ func GetCollsionRadius() -> float:
 func SetCollsionRadius() -> void:
 	collsionRadius = collisionShape.shape.get_radius()
 	
-
 func GetMaxAvoidanceForce() -> float:
 	return maxAvoidanceForce
 	

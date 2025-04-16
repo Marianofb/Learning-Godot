@@ -17,6 +17,7 @@
 script = ExtResource("1_3m12k")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_mask = 7
 safe_margin = 0.001
 script = ExtResource("2_3m12k")
 

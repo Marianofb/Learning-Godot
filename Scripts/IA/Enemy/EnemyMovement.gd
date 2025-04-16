@@ -39,14 +39,14 @@ func _physics_process(delta: float) -> void:
 	
 	## Movemenet Type ## 
 	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
-	Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
-	#FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
+	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
+	FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
 	#GoToFutureTargetPosition(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#Flee(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#EvadeThreat(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())		
 
 func _draw() -> void:
-	#DrawPathPoints()
+	DrawPathPoints()
 	#DrawAvoidanceRadius()
 	DrawAhead()
 	DrawCollisionRadius()
@@ -168,8 +168,8 @@ func RaycastHitsObstacle(selfGlobalPosition:Vector2, ahead:Vector2) -> Node2D:
 	var result = space_state.intersect_ray(query)
 
 	if result:
-		var collider = result.collider
-		if collider.get_collision_mask() == enemy.game.GetLayerMaskObstacle() : 
+		var collider : CollisionObject2D = result.collider
+		if collider.get_collision_layer() == enemy.game.GetLayerObstacle() : 
 			return collider
 	
 	return null

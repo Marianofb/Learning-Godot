@@ -39,8 +39,8 @@ func _physics_process(delta: float) -> void:
 	
 	## Movemenet Type ## 
 	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition())
-	#Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
-	FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
+	Seek(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition(), enemy.thing.global_position)
+	#FollowPath(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfCharactearBody2D(), enemy.GetSelfGlobalPosition())
 	#GoToFutureTargetPosition(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#Flee(enemy.GetSelfSpeed(),enemy.GetDrag(), enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())
 	#EvadeThreat(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())		
@@ -115,9 +115,9 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 	#If we are already colliding or we are gonna hit
 	#Else calculate the relative future position of the target
 	if targetDistance < radiusSum:
-		otherNPCAvoidanceForce = -targetRelativePos.normalized()
+		otherNPCAvoidanceForce = -targetRelativePos
 		var positionHash = int(enemy.global_position.x * 1000) % 2 
-		var sideDirection = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
+		var sideDirection = Vector2(-targetRelativePos.y, targetRelativePos.x)
 		if positionHash == 0:
 			otherNPCAvoidanceForce = otherNPCAvoidanceForce + sideDirection
 		else:

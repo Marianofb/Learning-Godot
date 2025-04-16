@@ -46,15 +46,14 @@ func _physics_process(delta: float) -> void:
 	#EvadeThreat(enemy.GetSelfSpeed(), enemy.GetDrag(), enemy.GetTargetVelocity(),enemy.GetSelfGlobalPosition(), enemy.GetTargetGlobalPosition(), enemy.GetSelfCharactearBody2D())		
 
 func _draw() -> void:
-	DrawPathPoints()
+	#DrawPathPoints()
 	#DrawAvoidanceRadius()
 	DrawAhead()
 	DrawCollisionRadius()
 	pass
 
 func RequestPathToTarget(selfPostion, targetPostion):	
-	if currentPath.is_empty():
-		currentPath = enemy.game.pathManager.GetPathToTarget(selfPostion, targetPostion)
+	currentPath = enemy.game.pathManager.GetPathToTarget(selfPostion, targetPostion)
 
 func Collision() -> bool:
 	if get_slide_collision_count() > 0:
@@ -116,7 +115,6 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 	#If we are already colliding or we are gonna hit
 	#Else calculate the relative future position of the target
 	if targetDistance < radiusSum:
-		print('COLISIÓN DETECTADA')
 		otherNPCAvoidanceForce = -targetRelativePos.normalized()
 		var positionHash = int(enemy.global_position.x * 1000) % 2 
 		var sideDirection = Vector2(-targetRelativePos.y, targetRelativePos.x).normalized()
@@ -124,8 +122,6 @@ func SetOtherNPCAvoidanceForce(drag : float, neighbours : Array[Node], collision
 			otherNPCAvoidanceForce = otherNPCAvoidanceForce + sideDirection
 		else:
 			otherNPCAvoidanceForce = otherNPCAvoidanceForce - sideDirection
-			
-		otherNPCAvoidanceForce = otherNPCAvoidanceForce.normalized() * 40
 	else:
 		var futurePos = targetRelativePos - targetRelativeVel * shortestTime
 		otherNPCAvoidanceForce = -futurePos.normalized()
@@ -196,7 +192,6 @@ func Seek(selfSpeed:float, selfDrag:float, selfCharacterBody2D:CharacterBody2D, 
 	var totalForce : Vector2 = steering + obstacleAvoidanceForce + otherNPCAvoidanceForce
 	selfCharacterBody2D.velocity += totalForce
 	selfCharacterBody2D.velocity =  selfCharacterBody2D.velocity.normalized() * clamp(selfCharacterBody2D.velocity.length(), 0, selfSpeed)
-	#print("Name: ", enemy.name, "  | velocity: ", selfCharacterBody2D.velocity)
 	
 	selfCharacterBody2D.move_and_slide()
 

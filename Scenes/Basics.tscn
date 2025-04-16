@@ -170,28 +170,28 @@ position = Vector2(600, 417)
 [node name="NPCs" type="Node2D" parent="."]
 
 [node name="Enemy" parent="NPCs" node_paths=PackedStringArray("thing") instance=ExtResource("5_frrjq")]
-position = Vector2(949, 101)
+position = Vector2(507, 137)
 maxAvoidanceForce = 14.0
-thing = NodePath("../../Objects/Obstacle")
+thing = NodePath("../../Objects/Obstacle2")
 
 [node name="Enemy2" parent="NPCs" node_paths=PackedStringArray("thing") instance=ExtResource("5_frrjq")]
-position = Vector2(296, 107)
+position = Vector2(505, 102)
 maxAvoidanceForce = 14.0
 thing = NodePath("../../Objects/Obstacle2")
 
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Obstacle" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(515, 411)
+position = Vector2(221, 101)
 
 [node name="Obstacle2" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(674, 514)
+position = Vector2(1023, 93)
 
 [node name="Obstacle3" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(566, 328)
+position = Vector2(545, 281)
 
 [node name="Obstacle4" parent="Objects" instance=ExtResource("6_frrjq")]
-position = Vector2(681, 376)
+position = Vector2(692, 419)
 
 [node name="Obstacle5" parent="Objects" instance=ExtResource("6_frrjq")]
 position = Vector2(685, 298)
